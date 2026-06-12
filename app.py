@@ -333,6 +333,28 @@ def load_all_data():
 data = load_all_data()
 
 # ─────────────────────────────────────────────────────────────────────────
+# COURSE MAPPING — Code to Name
+# ─────────────────────────────────────────────────────────────────────────
+COURSE_NAMES = {
+    'C001': 'Data Analytics Fundamentals',
+    'C002': 'Python Programming',
+    'C003': 'Web Development',
+    'C004': 'UI/UX Design',
+    'C005': 'Digital Marketing',
+    'C006': 'Machine Learning Basics',
+    'C007': 'Cybersecurity Essentials',
+}
+
+def get_course_name(course_id):
+    """Get full course name from code"""
+    return COURSE_NAMES.get(course_id, course_id)
+
+def format_course_label(course_id):
+    """Format course as 'CODE - Name'"""
+    name = get_course_name(course_id)
+    return f"{course_id} - {name}" if name != course_id else course_id
+
+# ─────────────────────────────────────────────────────────────────────────
 # SIDEBAR — Logo + Filters
 # ─────────────────────────────────────────────────────────────────────────
 with st.sidebar:
@@ -615,16 +637,19 @@ def page_overview():
         _section("Which Course Has Highest/Lowest Average Grade?")
         
         q3_data = data.get('q3', pd.DataFrame())
-        
         q3_data = filter_by_sidebar(q3_data, by='course')
         
         if not q3_data.empty:
+            # COURSE NAMES
+            q3_data_display = q3_data.copy()
+            q3_data_display['course_label'] = q3_data_display['course_id'].apply(format_course_label)
+            
             col1, col2 = st.columns([3, 1])
             
             with col1:
                 fig = px.bar(
-                    q3_data.sort_values('avg_score', ascending=False),
-                    x='course_id', y='avg_score',
+                    q3_data_display.sort_values('avg_score', ascending=False),
+                    x='course_label', y='avg_score', 
                     error_y='std_dev',
                     title="Average Grade by Course (with Std Dev)",
                     text='avg_score',
@@ -640,26 +665,34 @@ def page_overview():
                     xaxis_title="Course",
                     yaxis_title="Average Score",
                     showlegend=False,
-                    margin=dict(l=50, r=40, t=55, b=45),
+                    margin=dict(l=50, r=40, t=55, b=80), 
                     yaxis=dict(range=[0, 110]),
+                    xaxis=dict(tickangle=-45),  
                 )
-                st.plotly_chart(_theme(fig, height=450), width='stretch')
+                st.plotly_chart(_theme(fig, height=500), width="stretch") 
             
             with col2:
                 st.markdown("<br>", unsafe_allow_html=True)
-                highest = q3_data.iloc[0]
-                lowest = q3_data.iloc[-1]
+                highest_idx = q3_data_display['avg_score'].idxmax()
+                lowest_idx = q3_data_display['avg_score'].idxmin()
+                
+                highest = q3_data_display.loc[highest_idx]
+                lowest = q3_data_display.loc[lowest_idx]
                 
                 st.markdown(
                     f"<div class='insight-box'>"
-                    f"<b>Highest:</b> {highest['course_id']}<br>"
+                    f"<b>🏆 Highest:</b><br>"
+                    f"{highest['course_id']}<br>"
+                    f"<small>{get_course_name(highest['course_id'])}</small><br><br>"
                     f"{highest['avg_score']:.1f} (±{highest['std_dev']:.1f})<br><br>"
-                    f"<b>Lowest:</b> {lowest['course_id']}<br>"
+                    f"<b>📉 Lowest:</b><br>"
+                    f"{lowest['course_id']}<br>"
+                    f"<small>{get_course_name(lowest['course_id'])}</small><br><br>"
                     f"{lowest['avg_score']:.1f} (±{lowest['std_dev']:.1f})"
                     f"</div>",
                     unsafe_allow_html=True)
         else:
-            st.warning("No data available for selected filters")
+            st.warning("❌ No data available for selected filters")
 
     # ────────────────────────────────────────────────────────────────────────
     # Q4: ATTENDANCE VS GRADE
