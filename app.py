@@ -927,7 +927,7 @@ def page_overview():
                 title="Average Score: On-Time vs Late Submissions",
                 text='avg_score',
                 color='is_late',
-                color_discrete_map={True: RED, False: GREEN},
+                color_discrete_map={"LATE": RED, "On Time": GREEN},
             )
             fig.update_traces(
                 texttemplate="%{y:.1f}",
