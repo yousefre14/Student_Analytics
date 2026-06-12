@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-06-10T23:11:58.577462",
+  "data_sources": {
+    "students": 497,
+    "groups": 11,
+    "courses": 7,
+    "grades": 5502,
+    "attendance": 13009,
+    "concepts": 12008,
+    "engagement": 30866,
+    "submissions": 1504
+  },
+  "analytics": {
+    "q1": "q1_attendance_by_group.csv",
+    "q2": "q2_score_distribution.csv",
+    "q3": "q3_course_performance.csv",
+    "q4": "q4_attendance_grade_correlation.csv",
+    "q5": "q5_engagement_correlation.csv",
+    "q6": "q6_concept_failures.csv",
+    "q7": "q7_weakest_concept_trend.csv",
+    "q8": "q8_late_submission_impact.csv",
+    "q9": "q9_cohort_trends.csv",
+    "q10": "q10_age_analysis.csv",
+    "q11": "q11_student_segments.csv",
+    "q12": "q12_group_size_comparison.csv",
+    "q13": "q13_group_viability.csv",
+    "q14": "q14_at_risk_students.csv",
+    "q15": "q15_group_trends_monthly.csv"
+  }
+}

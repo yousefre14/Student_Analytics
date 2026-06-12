@@ -1,0 +1,2 @@
+record_id,student_id,group_id,session_type,session_datetime,status,datetime
+AT900001,S9999,G01,session,2025-12-04 16:00:00,attended,

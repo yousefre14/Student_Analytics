@@ -1,0 +1,10 @@
+rule_id,rule_name,severity,affected_rows,issue,action
+R001,Student age within valid range,medium,71,Out-of-range values in age,flag
+R004,Gender standardization,medium,8,Invalid category in gender,flag
+R005,Student ID uniqueness,high,4,Duplicate values in student_id,drop_duplicates
+R008,Group ID must exist in groups.csv (referential integrity),critical,3,Orphaned group_id values (not in groups.csv),quarantine
+R009,Full name not null,medium,4,Null values in full_name,flag
+R010,City standardization,low,264,Invalid category in city,flag
+R011,Group ID uniqueness,critical,2,Duplicate values in group_id,drop_duplicates
+R014,Stated group size positive,low,1,Out-of-range values in stated_num_students,flag
+R028,Attendance student_id referential integrity,critical,1,Orphaned student_id values (not in students.csv),quarantine

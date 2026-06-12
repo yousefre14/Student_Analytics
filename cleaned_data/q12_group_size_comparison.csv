@@ -1,0 +1,11 @@
+group_id,true_count,stated_num_students,discrepancy,discrepancy_pct,is_problem
+G03,54,67,13,24.1,True
+G06,56,56,0,0.0,False
+G05,46,76,30,65.2,True
+G02,56,56,0,0.0,False
+G01,50,52,2,4.0,False
+G07,58,70,12,20.7,True
+G04,65,65,0,0.0,False
+G08,60,60,0,0.0,False
+G09,51,51,0,0.0,False
+G10,1,31,30,3000.0,True

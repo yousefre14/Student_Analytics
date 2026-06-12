@@ -1,0 +1,35 @@
+concept_name,total,failed,failure_rate
+Recursion,409,349,85.33
+Joins & Merges,446,217,48.65
+Overfitting & Regularization,441,209,47.39
+Funnel Analytics,349,164,46.99
+SEO Basics,348,162,46.55
+Content Strategy,348,158,45.4
+Paid Ads,349,153,43.84
+Responsive Design,217,49,22.58
+JavaScript DOM,214,46,21.5
+HTML & Semantics,221,47,21.27
+HTTP & APIs,230,47,20.43
+Prototyping,276,50,18.12
+Color Theory,266,48,18.05
+CSS Layout,222,39,17.57
+Regression,441,76,17.23
+Descriptive Statistics,428,72,16.82
+Data Structures,425,71,16.71
+Classification,439,71,16.17
+Usability Testing,262,42,16.03
+Wireframing,269,43,15.99
+Control Flow,410,65,15.85
+Error Handling,396,62,15.66
+GroupBy & Aggregation,432,67,15.51
+Feature Engineering,462,71,15.37
+Functions,407,62,15.23
+Design Principles,272,40,14.71
+Data Cleaning,420,61,14.52
+Variables & Types,418,60,14.35
+Model Evaluation,435,57,13.1
+File I/O,416,54,12.98
+Spreadsheets & Tabular Data,422,54,12.8
+Data Visualization Basics,446,57,12.78
+Clustering,471,51,10.83
+Ã‚Â¤Ã¢â‚¬#@@ ??x??,1,0,0.0

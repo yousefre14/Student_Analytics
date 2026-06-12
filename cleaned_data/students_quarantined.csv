@@ -1,0 +1,6 @@
+student_id,full_name,age,gender,city,email,group_id,enrollment_date
+S0323,Aya Kamel,22,Female,Zagazig,aya.kamel@kayfa-student.io,G77,2025-12-18
+S0362,Hana Mansour,99,Male,Tanta,hana.mansour@kayfa-student.io,G08,2025-12-16
+S0074,Sherif Zaki,88,Female,Alexandria,sherif.zaki@kayfa-student.io,G08,2025-12-09
+S0014,Ali Refaat,17,Male,Ismailia,ali.refaat@kayfa-student.io,GZZ,2025-12-18
+S0095,Yasmin Fathy,22,Female,Zagazig,yasmin.fathy@kayfa-student.io,G77,2025-12-06

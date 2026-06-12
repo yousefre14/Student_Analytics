@@ -1,0 +1,4 @@
+age_band,score_mean_mean,score_mean_std,score_mean_count,attendance_rate_mean,total_events_mean
+18-25,70.36,8.21,356,83.16,61.56
+25-30,71.27,7.32,43,84.62,65.35
+30-35,68.15,13.89,2,78.85,58.5
