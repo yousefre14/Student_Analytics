@@ -917,35 +917,53 @@ def page_overview():
         _section("Do Late Submitters Score Lower?")
         
         q8_data = data.get('q8', pd.DataFrame())
-        q8_data = filter_by_sidebar(q8_data, by='student')  # ✅ FILTER
+        q8_data = filter_by_sidebar(q8_data, by='student')
         
         if not q8_data.empty:
+            # ✅ CREATE DISPLAY DATA WITH READABLE LABELS
             q8_data_display = q8_data.copy()
-            q8_data_display['submission_status'] = q8_data_display['is_late'].map({
-                True: 'Late Submission',
-                False: 'On-Time Submission'
-            })
+            
+            # Map boolean to readable text
+            q8_data_display['submission_status'] = q8_data_display['is_late'].apply(
+                lambda x: 'Late Submission' if x else 'On-Time Submission'
+            )
+            
+            # Sort for consistent display
+            q8_data_display = q8_data_display.sort_values('submission_status')
+            
+            # Create color map matching the new labels
+            color_map = {
+                'On-Time Submission': GREEN,
+                'Late Submission': RED
+            }
+            
             fig = px.bar(
-                q8_data,
-                x='is_late', y='avg_score',
+                q8_data_display,
+                x='submission_status',  # ✅ Use readable label
+                y='avg_score',
                 error_y='std_dev',
                 title="Average Score: On-Time vs Late Submissions",
                 text='avg_score',
-                color='is_late',
-                color_discrete_map={True: RED, False: GREEN},
+                color='submission_status',  # ✅ Color by label, not boolean
+                color_discrete_map=color_map,  # ✅ New color map
             )
+            
             fig.update_traces(
                 texttemplate="%{y:.1f}",
                 textposition="outside",
                 marker_line=dict(width=0),
             )
+            
             fig.update_layout(
-                xaxis_title="Submitted Late?",
+                xaxis_title="Submission Status",
                 yaxis_title="Average Score",
                 showlegend=False,
                 margin=dict(l=50, r=40, t=55, b=45),
             )
-            st.plotly_chart(_theme(fig, height=450), width='stretch')
+            
+            st.plotly_chart(_theme(fig, height=450), use_container_width=True)
+            
+            # Calculate insights from original data
             on_time = q8_data[q8_data['is_late'] == False]
             late = q8_data[q8_data['is_late'] == True]
             
@@ -960,8 +978,7 @@ def page_overview():
                     f"a <b>{gap:.1f} point gap</b>. Procrastination clearly impacts grades."
                 )
         else:
-            st.warning("No data available for selected filters")
-
+            st.warning("❌ No data available for selected filters")
     # ────────────────────────────────────────────────────────────────────────
     # Q9: COHORT TRENDS
     # ────────────────────────────────────────────────────────────────────────
