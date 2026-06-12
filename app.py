@@ -927,7 +927,7 @@ def page_overview():
                 title="Average Score: On-Time vs Late Submissions",
                 text='avg_score',
                 color='is_late',
-                color_discrete_map={"LATE": RED, "On Time": GREEN},
+                color_discrete_map={True: RED, False: GREEN},
             )
             fig.update_traces(
                 texttemplate="%{y:.1f}",
@@ -941,8 +941,8 @@ def page_overview():
                 margin=dict(l=50, r=40, t=55, b=45),
             )
             st.plotly_chart(_theme(fig, height=450), width='stretch')
-            on_time = q8_data[q8_data['is_late'] == False]
-            late = q8_data[q8_data['is_late'] == True]
+            on_time = q8_data[q8_data['is_late'] == "On Time"]
+            late = q8_data[q8_data['is_late'] == "LATE"]
             
             if not on_time.empty and not late.empty:
                 on_time_score = on_time['avg_score'].values[0]
