@@ -920,6 +920,11 @@ def page_overview():
         q8_data = filter_by_sidebar(q8_data, by='student')  # ✅ FILTER
         
         if not q8_data.empty:
+            q8_data_display = q8_data.copy()
+            q8_data_display['submission_status'] = q8_data_display['is_late'].map({
+                True: 'Late Submission',
+                False: 'On-Time Submission'
+            })
             fig = px.bar(
                 q8_data,
                 x='is_late', y='avg_score',
@@ -941,8 +946,8 @@ def page_overview():
                 margin=dict(l=50, r=40, t=55, b=45),
             )
             st.plotly_chart(_theme(fig, height=450), width='stretch')
-            on_time = q8_data[q8_data['is_late'] == "On Time"]
-            late = q8_data[q8_data['is_late'] == "LATE"]
+            on_time = q8_data[q8_data['is_late'] == False]
+            late = q8_data[q8_data['is_late'] == True]
             
             if not on_time.empty and not late.empty:
                 on_time_score = on_time['avg_score'].values[0]
