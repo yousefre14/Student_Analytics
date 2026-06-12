@@ -303,7 +303,7 @@ def load_all_data():
         'q10': 'q10_age',
         'q11': 'q11_segments',
         'q12': 'q12_groups',
-        'q13': 'q13_viability',
+        'q13': 'q13_metrics',
         'q13_group_metrics': 'q13_metrics',
         'q14': 'q14_risk',
         'q15': 'q15_trends',
@@ -1094,7 +1094,6 @@ def page_overview():
         
         q13_metrics = data.get('q13_group_metrics', pd.DataFrame())
         q13_metrics = filter_by_sidebar(q13_metrics, by='group')  # ✅ FILTER
-        q13_rec = data.get('q13', pd.DataFrame())
 
         
         if not q13_metrics.empty:
@@ -1123,11 +1122,13 @@ def page_overview():
             st.markdown("**Group Metrics:**")
             st.dataframe(q13_metrics, width="stretch", hide_index=True)
 
-        if not q13_rec.empty:
+        if not q13_metrics.empty:
             st.markdown("**Viability Recommendations:**")
-            st.dataframe(q13_rec, width="stretch", hide_index=True)
+        _insight(
+                f"G10 is less group amoung all groups."
+            )
 
-        if q13_metrics.empty and q13_rec.empty:
+        if q13_metrics.empty and q13_metrics.empty:
             st.warning("❌ Q13 data not found. Ensure q13_group_metrics.csv and q13_group_viability.csv exist in ./cleaned_data/")
 
     # ────────────────────────────────────────────────────────────────────────

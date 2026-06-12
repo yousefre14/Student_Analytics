@@ -39,7 +39,7 @@ questions = {
     'q10_age': 'q10_age_analysis.csv',
     'q11_segments': 'q11_student_segments.csv',
     'q12_groups': 'q12_group_size_comparison.csv',
-    'q13_viability': 'q13_group_viability.csv',
+    'q13_viability': 'q13_group_metrics.csv',
     'q13_metrics': 'q13_group_metrics.csv',
     'q14_risk': 'q14_at_risk_students.csv',
     'q15_trends': 'q15_group_trends_monthly.csv',
