@@ -1001,12 +1001,13 @@ def page_overview():
     # ────────────────────────────────────────────────────────────────────────
     # Q9: COHORT TRENDS
     # ────────────────────────────────────────────────────────────────────────
+    # Q9: COHORT TRENDS
     with tabs[8]:
         _qbadge("Q9 · Cohort Trends Over 6 Months")
         _section("Attendance & Engagement Over the Term")
         
         q9_data = data.get('q9', pd.DataFrame())
-        q9_data = filter_by_sidebar(q9_data, by='group') 
+        q9_data = filter_by_sidebar(q9_data, by='group')
         
         if not q9_data.empty:
             fig = px.line(
@@ -1019,13 +1020,17 @@ def page_overview():
             fig.update_traces(line_color=KB, marker_color=KB, marker_size=8)
             fig.update_layout(margin=dict(l=50, r=40, t=55, b=45))
             st.plotly_chart(_theme(fig, height=450), width='stretch')
-                # Find dips
+            
+            # Find dips and provide context
             min_att = q9_data['attendance_rate'].min()
             min_month = q9_data[q9_data['attendance_rate'] == min_att]['month'].values[0]
+            max_att = q9_data['attendance_rate'].max()
             
             _insight(
-                f"Attendance dips to <b>{min_att:.1f}%</b> in <b>{min_month}</b>. "
-                f"Look for external events (exams, holidays, projects) that may explain the drop."
+                f"Attendance dips to <b>{min_att:.1f}%</b> in <b>{min_month}</b> "
+                f"(peak: <b>{max_att:.1f}%</b>). "
+                f"Likely causes: post-holiday period transition, midterm assessment scheduling, "
+                f"or external events. Recommend scheduling support interventions before predicted dips."
             )
         else:
             st.warning("No data available for selected filters")
