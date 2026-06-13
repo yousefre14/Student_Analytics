@@ -333,6 +333,20 @@ def load_all_data():
 data = load_all_data()
 
 # ─────────────────────────────────────────────────────────────────────────
+# SEGMENT MAPPING — Student Segment Names
+# ─────────────────────────────────────────────────────────────────────────
+SEGMENT_NAMES = {
+    0: "Disengaged At-Risk",
+    1: "High-Achievers", 
+    2: "Unmotivated Strugglers",
+    3: "Stable Performers"
+}
+
+def get_segment_name(segment_id):
+    """Get full segment name from ID"""
+    return SEGMENT_NAMES.get(segment_id, f"Segment {segment_id}")
+
+# ─────────────────────────────────────────────────────────────────────────
 # COURSE MAPPING — Code to Name
 # ─────────────────────────────────────────────────────────────────────────
 COURSE_NAMES = {
@@ -1075,9 +1089,7 @@ def page_overview():
         else:
             st.warning("Q10 data not available")
 
-    # ────────────────────────────────────────────────────────────────────────
     # Q11: STUDENT SEGMENTS
-    # ────────────────────────────────────────────────────────────────────────
     with tabs[10]:
         _qbadge("Q11 · Student Segmentation")
         _section("How Do We Cluster Students by Performance?")
@@ -1085,11 +1097,36 @@ def page_overview():
         q11_summary = data.get('q11', pd.DataFrame())
         
         if not q11_summary.empty:
+            # Add segment names
+            q11_display = q11_summary.copy()
+            q11_display['segment_description'] = q11_display['segment'].apply(get_segment_name)
+            
             st.write("**Segment Profiles:**")
-            st.dataframe(q11_summary, width='stretch', hide_index=True)
-            _insight(
-        "Students are grouped into 4 distinct segments based on "
-        "attendance, engagement, and grades. Each segment has unique needs and risks.")
+            st.dataframe(q11_display, width='stretch', hide_index=True)
+            
+            # Add detailed descriptions
+            st.markdown("**Segment Interpretation:**")
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                _insight(
+                    "<b>Segment 0 - Disengaged At-Risk:</b> Low attendance, low engagement, low grades. "
+                    "Requires immediate intervention and support."
+                )
+                _insight(
+                    "<b>Segment 2 - Unmotivated Strugglers:</b> Attend classes but show low engagement. "
+                    "Need motivation and active learning strategies."
+                )
+            
+            with col2:
+                _insight(
+                    "<b>Segment 1 - High-Achievers:</b> Consistent attendance, high engagement, strong grades. "
+                    "Consider as peer mentors for struggling students."
+                )
+                _insight(
+                    "<b>Segment 3 - Stable Performers:</b> Balanced metrics across all dimensions. "
+                    "Reliable students maintaining steady progress."
+                )
         else:
             st.warning("No data available")
 
