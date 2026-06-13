@@ -1075,22 +1075,14 @@ def page_overview():
                         x='age_band', y=eng_col[0],
                         title="Engagement by Age Band",
                         color=eng_col[0],
-                        color_continuous_scale='Blues',
+                        color_continuous_scale='Reds',
                     )
                     fig.update_layout(
                         showlegend=False,
                         margin=dict(l=50, r=40, t=55, b=45),
                     )
                     st.plotly_chart(_theme(fig, height=400), width="stretch")
-            
-            st.write(q10_data)
-            
-            # Add statistical caveat
-            st.warning(
-                "Statistical Note: Some age bands contain very small sample sizes (e.g., 30-35 has 2 students). "
-                "Conclusions about these groups should be treated with caution. "
-                "Minimum recommended sample size for reliable comparisons: 20+ students per group."
-            )
+        
         else:
             st.warning("Q10 data not available")
 
