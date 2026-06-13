@@ -1025,15 +1025,13 @@ def page_overview():
         else:
             st.warning("No data available for selected filters")
 
-    # ────────────────────────────────────────────────────────────────────────
     # Q10: AGE ANALYSIS
-    # ────────────────────────────────────────────────────────────────────────
     with tabs[9]:
         _qbadge("Q10 · Age-Based Performance")
         _section("Does Age Relate to Outcomes?")
         
         q10_data = data.get('q10', pd.DataFrame())
-        q10_data = filter_by_sidebar(q10_data, by='student')  # ✅ FILTER
+        q10_data = filter_by_sidebar(q10_data, by='student')
         
         if not q10_data.empty:
             col1, col2, col3 = st.columns(3)
@@ -1086,6 +1084,13 @@ def page_overview():
                     st.plotly_chart(_theme(fig, height=400), width="stretch")
             
             st.write(q10_data)
+            
+            # Add statistical caveat
+            st.warning(
+                "Statistical Note: Some age bands contain very small sample sizes (e.g., 30-35 has 2 students). "
+                "Conclusions about these groups should be treated with caution. "
+                "Minimum recommended sample size for reliable comparisons: 20+ students per group."
+            )
         else:
             st.warning("Q10 data not available")
 
