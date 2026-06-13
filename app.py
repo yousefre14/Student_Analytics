@@ -1177,16 +1177,13 @@ def page_overview():
         else:
             st.warning("Q12 data not available")
 
-    # ────────────────────────────────────────────────────────────────────────
     # Q13: GROUP VIABILITY
-    # ────────────────────────────────────────────────────────────────────────
     with tabs[12]:
         _qbadge("Q13 · Group Viability Analysis")
         _section("Which Groups Are Too Small to be Viable?")
         
         q13_metrics = data.get('q13_group_metrics', pd.DataFrame())
-        q13_metrics = filter_by_sidebar(q13_metrics, by='group')  # ✅ FILTER
-
+        q13_metrics = filter_by_sidebar(q13_metrics, by='group')
         
         if not q13_metrics.empty:
             fig = px.bar(
@@ -1213,15 +1210,31 @@ def page_overview():
             
             st.markdown("**Group Metrics:**")
             st.dataframe(q13_metrics, width="stretch", hide_index=True)
-
-        if not q13_metrics.empty:
-            st.markdown("**Viability Recommendations:**")
-        _insight(
-                f"G10 is less group amoung all groups."
-            )
-
-        if q13_metrics.empty and q13_metrics.empty:
-            st.warning("❌ Q13 data not found. Ensure q13_group_metrics.csv and q13_group_viability.csv exist in ./cleaned_data/")
+            
+            # Add viability assessment
+            st.markdown("**Viability Assessment:**")
+            
+            min_viable = 40
+            non_viable = q13_metrics[q13_metrics['num_students'] < min_viable]
+            
+            if not non_viable.empty:
+                for idx, row in non_viable.iterrows():
+                    group_id = row['group_id']
+                    count = row['num_students']
+                    _risk(
+                        f"<b>Group {group_id} is not viable ({count} students < {min_viable} minimum).</b> "
+                        f"Recommend merger with another group studying the same course."
+                    )
+                
+                st.markdown("**Merge Recommendation:**")
+                _cta(
+                    f"Merge non-viable groups into larger cohorts. This will improve outcomes through: "
+                    f"(1) Better resource allocation, (2) Reduced isolation, (3) More peer interaction."
+                )
+            else:
+                st.success("All groups meet minimum viability threshold.")
+        else:
+            st.warning("Q13 data not found.")
 
     # ────────────────────────────────────────────────────────────────────────
     # Q14: AT-RISK STUDENTS
