@@ -1075,7 +1075,7 @@ def page_overview():
                         x='age_band', y=eng_col[0],
                         title="Engagement by Age Band",
                         color=eng_col[0],
-                        color_continuous_scale='Reds',
+                        color_continuous_scale='Greens',
                     )
                     fig.update_layout(
                         showlegend=False,
