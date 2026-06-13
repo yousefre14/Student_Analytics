@@ -898,7 +898,7 @@ def page_overview():
         _section("How Does Mastery Change Over Time for the Weakest Concept?")
         
         q7_data = data.get('q7', pd.DataFrame())
-        q7_data = filter_by_sidebar(q7_data, by='student') 
+        q7_data = filter_by_sidebar(q7_data, by='student')
         
         if not q7_data.empty:
             fig = px.line(
@@ -911,15 +911,20 @@ def page_overview():
             fig.update_traces(line_color=KB, marker_color=KB, marker_size=8)
             fig.update_layout(margin=dict(l=50, r=40, t=55, b=45))
             st.plotly_chart(_theme(fig, height=450), width='stretch')
-
+    
             if not q7_data.empty:
                 first_val = q7_data['score_pct_mean'].iloc[0]
                 last_val = q7_data['score_pct_mean'].iloc[-1]
-                trend = "improving" if last_val > first_val else "declining" if last_val < first_val else "flat"
-            _insight(
-            f"Mastery trend is <b>{trend}</b> from <b>{first_val:.1f}%</b> to <b>{last_val:.1f}%</b>. "
-            f"This shows how students' understanding of the weakest concept is evolving."
-        )
+                max_val = q7_data['score_pct_mean'].max()
+                min_val = q7_data['score_pct_mean'].min()
+                volatility = max_val - min_val
+                
+                _insight(
+                    f"Mastery trend shows <b>volatility of {volatility:.1f}% across the term</b>, "
+                    f"ranging from <b>{min_val:.1f}%</b> to <b>{max_val:.1f}%</b>. "
+                    f"No consistent improvement pattern suggests inconsistent curriculum delivery. "
+                    f"Recommend standardizing teaching approach and increasing practice opportunities."
+                )
         else:
             st.warning("No data available for selected filters")
 
